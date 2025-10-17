@@ -33,14 +33,11 @@ int main() {
     //             }
     //         }
     //     }
-    //     for (int i = 0; i < size; i++) {
-    //         cout << nums[i] << " ";
-    //     }
     // } else {
     //     cout << "Числа не кратны 5, вот обычный массив:" << endl;
-    //     for (int i = 0; i < size; i++) {
-    //         cout << nums[i] << " ";
-    //     }
+    // }
+    // for (int i = 0; i < size; i++) {
+    //     cout << nums[i] << " ";
     // }
 
     // --------------- 2 задание --------------
@@ -75,21 +72,14 @@ int main() {
                 matrix[i][colIndex] = -1;
             }
         }
-
-        for (int i = 0; i < rows; i++) {
-            for(int j = 0; j < cols; j++) {
-                cout << matrix[i][j] << "\t";
-            }
-            cout << endl;
-        }
     } else {
         cout << "В матрице нет ни одного отрицательного числа!" << endl;
-        for (int i = 0; i < rows; i++) {
-            for(int j = 0; j < cols; j++) {
-                cout << matrix[i][j] << "\t";
-            }
-            cout << endl;
+    }
+    for (int i = 0; i < rows; i++) {
+        for(int j = 0; j < cols; j++) {
+            cout << matrix[i][j] << "\t";
         }
+        cout << endl;
     }
     return 0;
 }
