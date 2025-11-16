@@ -5,7 +5,8 @@ using namespace std;
 
 // ------------------------- 4 ВАРИАНТ -------------------------
 
-void variants(int a) {
+int variants(int a) {
+    cout << "Использование функции для 1 числа" << endl;
     int digitCount[10] = {0};
     
     a = abs(a);
@@ -26,15 +27,16 @@ void variants(int a) {
             maxCount = digitCount[i];
         }
     }
-    cout << maxCount;
+    return maxCount;
 }
 
-void variants(int a, int b, int c) {
+int variants(int a, int b, int c) {
+    cout << "Использование функции для 3 чисел" << endl;
     if ((a != b) && (b != c) && (a != c)) {
-        cout << ((abs(a) + abs(b) + abs(c)) / 3);
+        return ((abs(a) + abs(b) + abs(c)) / 3);
     } else {
         int minn = min({a, b, c});
-        cout << minn;
+        return minn;
     }
 }
 
@@ -58,23 +60,20 @@ void Point1() {
                     oneNum = items[i];
                 }
             }
-            variants(oneNum);
+            cout << variants(oneNum);
             break;
         }
         case 3:
-            variants(items[0], items[1], items[2]);
+            cout << variants(items[0], items[1], items[2]);
             break;
     }
 }
 
-void Point2() {
+void Point2(short r) {
     const float P = 13.1415f;
-    unsigned short radius;
 
-    cin >> radius;
-
-    float volume = 4/3 * P * pow(radius, 3);
-    short square = 4 * P * pow(radius, 2);
+    float volume = 4/3 * P * pow(r, 3);
+    short square = 4 * P * pow(r, 2);
 
     cout << "Обьем сферы: " << volume << endl;
     cout << "Площадь сферы: " << square << endl;
@@ -90,7 +89,9 @@ int main() {
             Point1();
             break;
         case 2: 
-            Point2();
+            unsigned short radius;
+            cin >> radius;
+            Point2(radius);
             break;
     }
 
