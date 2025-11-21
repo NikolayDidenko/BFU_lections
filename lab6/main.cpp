@@ -6,49 +6,45 @@ int* processMatrix(int**& matrix, int& rows, int& cols, int A, int B, int C, int
     int newRows = 2 + A;
     int newCols = 2 + B;
 
-    int** newMatrix = (int**)malloc(newRows * sizeof(int*));
-    for (int i = 0; i < newRows; i++) {
-        newMatrix[i] = (int*)malloc(newCols * sizeof(int));
-    }
-    
-    for (int i = 0; i < newRows; i++) {
-        for (int j = 0; j < newCols; j++) {
-            newMatrix[i][j] = i * C + j * D;
-        }
-    }
-    
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
     }
     free(matrix);
     
-    matrix = newMatrix;
+    matrix = (int**)malloc(newRows * sizeof(int*));
+    for (int i = 0; i < newRows; i++) {
+        matrix[i] = (int*)malloc(newCols * sizeof(int));
+        for (int j = 0; j < newCols; j++) {
+            matrix[i][j] = i * C + j * D;
+        }
+    }
+    
     rows = newRows;
     cols = newCols;
     
-    int* zeroRows = (int*)calloc(rows, sizeof(int));
     int zeroCount = 0;
-    
     for (int i = 0; i < rows; i++) {
-        bool hasZero = false;
         for (int j = 0; j < cols; j++) {
             if (matrix[i][j] == 0) {
-                hasZero = true;
+                zeroCount++;
                 break;
             }
-        }
-        if (hasZero) {
-            zeroRows[zeroCount++] = i;
         }
     }
     
     int* result = (int*)malloc((zeroCount + 1) * sizeof(int));
     result[0] = zeroCount;
-    for (int i = 1; i <= zeroCount; i++) {
-        result[i] = zeroRows[i - 1];
+    
+    int resultIndex = 1;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (matrix[i][j] == 0) {
+                result[resultIndex++] = i;
+                break;
+            }
+        }
     }
     
-    free(zeroRows);
     return result;
 }
 
@@ -59,46 +55,36 @@ void removeRows(int**& matrix, int& rows, int& cols, int* rowsToRemove) {
         return;
     }
     
-    int newRows = rows - removeCount;
-    
-    int** newMatrix = (int**)malloc(newRows * sizeof(int*));    
-    int newI = 0;
-    for (int i = 0; i < rows; i++) {
-        bool shouldRemove = false;
-        
-        // Проверяем, нужно ли удалять текущую строку
-        for (int k = 1; k <= removeCount; k++) {
-            if (i == rowsToRemove[k]) {
-                shouldRemove = true;
-                break;
-            }
-        }
-        
-        if (!shouldRemove) {
-            newMatrix[newI] = (int*)malloc(cols * sizeof(int));
-            for (int j = 0; j < cols; j++) {
-                newMatrix[newI][j] = matrix[i][j];
-            }
-            newI++;
+    for (int k = 1; k <= removeCount; k++) {
+        int rowToRemove = rowsToRemove[k];
+        if (rowToRemove < rows && matrix[rowToRemove] != NULL) {
+            free(matrix[rowToRemove]);
+            matrix[rowToRemove] = NULL;
         }
     }
     
+    int newIndex = 0;
     for (int i = 0; i < rows; i++) {
-        bool shouldRemove = false;
-        for (int k = 1; k <= removeCount; k++) {
-            if (i == rowsToRemove[k]) {
-                shouldRemove = true;
-                break;
+        if (matrix[i] != NULL) {
+            if (newIndex != i) {
+                matrix[newIndex] = matrix[i];
+                matrix[i] = NULL;
             }
-        }
-        if (shouldRemove) {
-            free(matrix[i]);
+            newIndex++;
         }
     }
-    free(matrix);
-
-    matrix = newMatrix;
-    rows = newRows;
+    
+    if (newIndex > 0) {
+        int** temp = (int**)realloc(matrix, newIndex * sizeof(int*));
+        if (temp != NULL) {
+            matrix = temp;
+        }
+        rows = newIndex;
+    } else {
+        free(matrix);
+        matrix = NULL;
+        rows = 0;
+    }
 }
 
 void printMatrix(int** matrix, int rows, int cols) {
@@ -169,9 +155,12 @@ int main() {
     matrix[1][0] = C;
     matrix[1][1] = D;
     
+    cout << "Исходная матрица:" << endl;
+    printMatrix(matrix, rows, cols);
     
     int* zeroRows = processMatrix(matrix, rows, cols, A, B, C, D);
     
+    cout << "Матрица после processMatrix:" << endl;
     printMatrix(matrix, rows, cols);
     
     removeRows(matrix, rows, cols, zeroRows);
@@ -181,12 +170,16 @@ int main() {
     
     free(zeroRows);
 
-    for (int i = 0; i < rows; i++) {
-        free(matrix[i]);
+    if (matrix != NULL) {
+        for (int i = 0; i < rows; i++) {
+            if (matrix[i] != NULL) {
+                free(matrix[i]);
+            }
+        }
+        free(matrix);
     }
-
-    free(matrix);
     
     workWithPointers();
+
     return 0;
 }
