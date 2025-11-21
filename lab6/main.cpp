@@ -6,30 +6,41 @@ int* processMatrix(int**& matrix, int& rows, int& cols, int A, int B, int C, int
     int newRows = 2 + A;
     int newCols = 2 + B;
 
-    int** newMatrix = (int**)calloc(newRows, sizeof(int*));
-    for(int i = 0; i < newRows; i++) {
-        newMatrix[i] = (int*)calloc(newCols, sizeof(int));
-    }
+    int savedA = matrix[0][0];
+    int savedB = matrix[0][1]; 
+    int savedC = matrix[1][0];
+    int savedD = matrix[1][1];
 
+    matrix = (int**)realloc(matrix, newRows * sizeof(int*));
     for(int i = 0; i < newRows; i++) {
-        for(int j = 0; j < newCols; j++) {
-            if((i >= A) && (j >= B)) {
-                newMatrix[i][j] = matrix[i - A][j - B];
+        if(i < rows) {
+            matrix[i] = (int*)realloc(matrix[i], newCols * sizeof(int));
+            for(int j = cols; j < newCols; j++) {
+                matrix[i][j] = 0;
             }
-            else {
-                newMatrix[i][j] = i * C + j * D;
-            }
+        } else {
+            matrix[i] = (int*)calloc(newCols, sizeof(int));
         }
     }
 
-    for (int i = 0; i < rows; i++) {
-        free(matrix[i]);
-    }
-    free(matrix);
-    
-    matrix = newMatrix;
     rows = newRows;
     cols = newCols;
+
+    for(int i = 0; i < rows; i++) {
+        for(int j = 0; j < cols; j++) {
+            if(i >= A && j >= B) {
+                matrix[i][j] = matrix[i - A][j - B];
+            }
+            else {
+                matrix[i][j] = i * C + j * D;
+            }
+        }
+    }
+    
+    matrix[A][B] = savedA; 
+    matrix[A][B+1] = savedB;
+    matrix[A+1][B] = savedC;
+    matrix[A+1][B+1] = savedD;
     
     int zeroCount = 0;
     for (int i = 0; i < rows; i++) {
