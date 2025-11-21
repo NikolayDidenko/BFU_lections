@@ -6,19 +6,28 @@ int* processMatrix(int**& matrix, int& rows, int& cols, int A, int B, int C, int
     int newRows = 2 + A;
     int newCols = 2 + B;
 
+    int** newMatrix = (int**)calloc(newRows, sizeof(int*));
+    for(int i = 0; i < newRows; i++) {
+        newMatrix[i] = (int*)calloc(newCols, sizeof(int));
+    }
+
+    for(int i = 0; i < newRows; i++) {
+        for(int j = 0; j < newCols; j++) {
+            if((i >= A) && (j >= B)) {
+                newMatrix[i][j] = matrix[i - A][j - B];
+            }
+            else {
+                newMatrix[i][j] = i * C + j * D;
+            }
+        }
+    }
+
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
     }
     free(matrix);
     
-    matrix = (int**)malloc(newRows * sizeof(int*));
-    for (int i = 0; i < newRows; i++) {
-        matrix[i] = (int*)malloc(newCols * sizeof(int));
-        for (int j = 0; j < newCols; j++) {
-            matrix[i][j] = i * C + j * D;
-        }
-    }
-    
+    matrix = newMatrix;
     rows = newRows;
     cols = newCols;
     
