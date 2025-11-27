@@ -4,7 +4,9 @@
 #include <cmath>
 using namespace std;
 
-// ---------------- Пункт 1 (vector) ----------------
+// ВАРИАНТ 4
+
+// ---------------- П1 (vector) ----------------
 
 void printVector(const vector<int>& msv) {
     cout << "[";
@@ -39,7 +41,6 @@ vector<int> findElements(const vector<int>& msv, int x) {
     return idx;
 }
 
-// ВАРИАНТ 4
 void variant4(vector<int>& msv) {
     int mn = 999999;
 
@@ -60,7 +61,7 @@ void variant4(vector<int>& msv) {
 }
 
 
-// ---------------- Пункт 2 (array) ----------------
+// ---------------- П2 (array) ----------------
 
 /* По значению: 
     -Неэффективно;
@@ -103,9 +104,6 @@ void sortByPointer(array<int,10>* arr) {
                 swap((*arr)[j], (*arr)[j+1]);
 }
 
-
-// ---------------- MAIN ----------------
-
 int main() {
     vector<int> msv = {100, 23, 23, 52, 54};
 
@@ -128,30 +126,49 @@ int main() {
 
         if (pnt == 1) printVector(msv);
         else if (pnt == 2) {
-            int x; cout << "Введите число: "; cin >> x;
-            cout << "До: "; printVector(msv);
+            int x; cout << "Введите число: "; 
+
+            cin >> x;
+
+            cout << "До: "; 
+            printVector(msv);
             pushFront(msv, x);
-            cout << "После: "; printVector(msv);
+
+            cout << "После: "; 
+            printVector(msv);
         }
         else if (pnt == 3) {
-            int x; cout << "Введите число: "; cin >> x;
-            cout << "До: "; printVector(msv);
+            int x; cout << "Введите число: ";
+
+            cin >> x;
+
+            cout << "До: "; 
+            printVector(msv);
             pushBack(msv, x);
-            cout << "После: "; printVector(msv);
+
+            cout << "После: "; 
+            printVector(msv);
         }
         else if (pnt == 4) {
-            cout << "До: "; printVector(msv);
+            cout << "До: "; 
+            printVector(msv);
             clearVector(msv);
-            cout << "После: "; printVector(msv);
+
+            cout << "После: "; 
+            printVector(msv);
         }
         else if (pnt == 5) {
-            int x; cout << "Введите элемент: "; cin >> x;
+            int x; 
+            cout << "Введите элемент: "; 
+            cin >> x;
             printVector(findElements(msv, x));
         }
         else if (pnt == 6) {
-            cout << "До: "; printVector(msv);
+            cout << "До: "; 
+            printVector(msv);
             variant4(msv);
-            cout << "После: "; printVector(msv);
+            cout << "После: "; 
+            printVector(msv);
         }
         else if (pnt == 7) {
             array<int,10> arr = {3,-1,5,0,-2,9,7,-3,4,1};
@@ -163,15 +180,21 @@ int main() {
             sortByPointer(&a3);
 
             cout << "sortByValue: ";
-            for (int x : a1) cout << x << " ";
+            for (int i = 0; i < a1.size(); i++) {
+                cout << i << " ";
+            }
             cout << endl;
 
             cout << "sortByReference: ";
-            for (int x : a2) cout << x << " ";
+            for (int i = 0; i < a2.size(); i++) {
+                cout << i << " ";
+            }
             cout << endl;
 
             cout << "sortByPointer: ";
-            for (int x : a3) cout << x << " ";
+            for (int i = 0; i < a3.size(); i++) {
+                cout << i << " ";
+            }
             cout << endl;
         }
     }
