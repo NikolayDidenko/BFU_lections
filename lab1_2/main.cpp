@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-
+// 4 вариант
 class Book {
     private:
         string author;
@@ -15,6 +15,16 @@ class Book {
             }
             if (rating > 5.0) {
                 rating = 5.0;
+            }
+        }
+        void validateCost() {
+            if (cost < 0) {
+                cost = 0;
+            }
+        }
+        void validateRating() {
+            if (rating < 0) {
+                rating = 0;
             }
         }
     public:
@@ -43,7 +53,9 @@ class Book {
             cost = other.cost;
         }
 
-        ~Book() {}
+        ~Book() {
+            cout << "Run_Destructor" << endl;
+        }
 
         string getAuthor() { 
             return author; 
