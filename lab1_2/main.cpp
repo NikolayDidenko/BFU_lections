@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 using namespace std;
+
 // 4 вариант
+
 class Book {
     private:
         string author;
@@ -22,9 +24,9 @@ class Book {
                 cost = 0;
             }
         }
-        void validateRating() {
-            if (rating < 0) {
-                rating = 0;
+        void validatePageCount() {
+            if (pageCount < 0) {
+                pageCount = 0;
             }
         }
     public:
@@ -43,6 +45,8 @@ class Book {
             rating = r;
             cost = c;
             validateRating();
+            validateCost();
+            validatePageCount();
         }
 
         Book(const Book &other) {
