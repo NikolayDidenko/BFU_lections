@@ -16,9 +16,12 @@ public:
     Book(string a, vector<string> w, int p, float pr);
     
     Book operator+(Book other);
+    Book operator+=(Book other);
     Book operator/(Book other);
     
     void show();
+
+    ~Book();
 };
 
 #endif

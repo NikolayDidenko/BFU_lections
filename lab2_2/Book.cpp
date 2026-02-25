@@ -18,6 +18,11 @@ Book::Book(string a, vector<string> w, int p, float pr) {
     price = pr;
 }
 
+Book::~Book() {
+    cout << "Деструктор работает" << endl;
+    works.clear();
+}
+
 Book Book::operator+(Book other) {
     Book result;
     
@@ -47,6 +52,26 @@ Book Book::operator+(Book other) {
     }
     
     return result;
+}
+
+Book Book::operator+=(Book other) {
+    
+    pages = pages + other.pages;
+    
+    price = (price + other.price) * 0.85f;
+    
+    vector<string> newWorks;
+    
+    for (int i = 0; i < works.size(); i++) {
+        newWorks.push_back(author + works[i]);
+    }
+    for (int i = 0; i < other.works.size(); i++) {
+        newWorks.push_back(other.author + other.works[i]);
+    }
+    
+    works = newWorks;
+    
+    return *this;
 }
 
 Book Book::operator/(Book other) {

@@ -1,34 +1,51 @@
+#include "Player.h"
 #include <iostream>
-#include <cfloat>
+#include <vector>
+
 using namespace std;
-// 4 ВАРИАНТ
-
-const float P = 13.1415f;
-unsigned short radius; // Выбрал тип данных с припиской unsigned, так как радиус не может быть отрицательным
-
-/*
-Многострочный комментарий
-В нем много строк
-*/
-
-
-short sizeOfShort = sizeof(short) * 8;
-short minUnsShortValue = -pow(2, sizeOfShort - 1);
-short maxUnsShortValue = pow(2, sizeOfShort - 1) - 1;
-
-short sizeOfFloat = sizeof(float) * 8;
-float minFloatValue = -FLT_MAX;
-float maxFloatValue = FLT_MAX;
 
 int main() {
 
-    cout << "short занимает: " << sizeOfShort << " бит, мин значение = " << minUnsShortValue << ", макс значение = " << maxUnsShortValue << endl;
-    cout << "float занимает: " << sizeOfFloat << " бит, мин значение = " << minFloatValue << ", макс значение = " << maxFloatValue << endl;
-    cin >> radius;
+    srand(time(0));
 
-    float volume = 4/3 * P * pow(radius, 3);
-    short square = 4 * P * pow(radius, 2);
+    vector<char> items1;
+    items1.push_back('a');
+    items1.push_back('b');
+    items1.push_back('c');
+    items1.push_back('d');
+    
+    vector<char> items2;
+    items2.push_back('a');
+    items2.push_back('c');
+    items2.push_back('x');
+    items2.push_back('y');
+    
+    Player p1("Г1", 10, 10, 100, items1);
+    Player p2("Г2", 0, 0, 100, items2);
+    
+    cout << "Игрок 1: ";
+    p1.show();
+    cout << "Игрок 2: ";
+    p2.show();
+    
+    cout << endl << "Результаты операций:" << endl;
+    
+    Player p3 = p1 + p2;
+    cout << "p1 + p2 = ";
+    p3.show();
+    
+    Player p4 = p1 - p2;
+    cout << "p1 - p2 = ";
+    p4.show();
+    
+    Player p5 = p1 / p2;
+    cout << "p1 / p2 = ";
+    p5.show();
+    
+    Player p6(p1);      
+    Player p7 = p2;    
+    p6.show();
+    p7.show();
 
-    cout << "Обьем сферы: " << volume << endl;
-    cout << "Площадь сферы: " << square << endl;
+    return 0;
 }

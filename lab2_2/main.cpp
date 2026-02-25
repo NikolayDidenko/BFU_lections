@@ -19,22 +19,26 @@ int main() {
     cout << "Результат book1 + book2:" << endl;
     Book book3 = book1 + book2;
     book3.show();
+
+    cout << "Результат book1 += book2:" << endl;
+    book1 += book2;
+    book1.show();
     
     cout << "Результат book1 / book2:" << endl;
-    Book book4 = book1 / book2;
-    book4.show();
-    
-    Book book5("B", works2, 50, 100.0f);
-    cout << "\nКнига 5 (автор B):" << endl;
+    Book book5 = book1 / book2;
     book5.show();
     
-    cout << "Результат book1 + book5 (разные авторы):" << endl;
-    Book book6 = book1 + book5;
+    Book book6("B", works2, 50, 100.0f);
+    cout << "\nКнига 6 (автор B):" << endl;
     book6.show();
     
-    cout << "Простое копирование:" << endl;
-    Book book7 = book1;
+    cout << "Результат book1 + book6 (разные авторы):" << endl;
+    Book book7 = book1 + book6;
     book7.show();
+    
+    cout << "Простое копирование:" << endl;
+    Book book8 = book1;
+    book8.show();
     
     return 0;
 }
